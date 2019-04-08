@@ -11,7 +11,7 @@ const Layout = (props) => {
   return (
     <div style={layoutStyle}>
       <Header />
-      <h1>Kamar</h1>
+      <h1>Twitter Search Client</h1>
       <Search />
       {props.children}
     </div>

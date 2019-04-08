@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "next build",
     "dev": "node server.js",
+    "develop": "npm run dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "npm run build; NODE_ENV=production node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,12 +22,15 @@
   },
   "homepage": "https://github.com/kluwena/airy-exercise#readme",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "axios": "^0.18.0",
-    "cors": "^2.8.5",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "next": "^8.0.4",
+    "query-string": "^6.4.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "twitter": "^1.7.1"
   },
   "proxy": "api.example.com"
 }

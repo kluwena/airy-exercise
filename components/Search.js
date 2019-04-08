@@ -1,67 +1,35 @@
-import { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
+import twitterService from '../lib/twitter';
 
-class Search extends Component {
+class Search extends React.Component {
+
   state = {
-    query: ''
+    q: '',
+    tweets: [],
   }
 
-  handleInputChange = () => {
+  handleChange = e => {
     this.setState({
-      query: this.search.value,
+      [e.target.name]: e.target.value,
     })
-    // let reqData = {
-    //   data: {
-    //     query: 'manado',
-    //   }
-    // }
-    let data = {
-      'query': 'manado',
-    }
-
-    let config = {
-      "application":"airyrooms",
-      'apiKey':'airy.airyrooms.ieneeSh4',
-      'apiToken':'airy.airyrooms.token.tahs1thee1hae2Do',
-      headers : {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type' : 'application/json',
-      }
-    } 
-    let headers = {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type' : 'application/json',      
-    }
-
-    axios({
-      method: 'post',
-      url: 'https://api.airyrooms.com/api/v2/search/autocomplete',
-      data: {
-        query: 'manado'
-      },
-      // apiKey: 'airy.airyrooms.ieneeSh4',
-      // apiToken: 'airy.airyrooms.token.tahs1thee1hae2Do',
-      headers : {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type' : 'application/json',
-      },
-    })
-      .then(res => {
-        console.log(res.data)
-      })
-    // axios.post('https://api.airyrooms.com/api/v2/search/autocomplete', data, headers)
-    //   .then(res => {
-    //     console.log(res.data)
-    //   })
-    // axios.get('https://jsonplaceholder.typicode.com/users/1', {headers: headers})
-    //   .then(res => {
-    //     console.log(res.data);
-    //   })
-    
   }
 
-  handleInputSubmit = () => {
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log('handlesubmit in react triggered')
+    this.handleSearchTweets();
+  }
 
+  handleSearchTweets = () => {
+    const q = this.state.q;
+
+    twitterService.searchTweets({q})
+      .then(tweets => {
+        console.log(tweets)
+        this.setState({
+          tweets
+        })
+      })
   }
 
   render () {
@@ -70,12 +38,23 @@ class Search extends Component {
         <form>
           <input 
             type="text" 
-            placeholder ="Di mana anda akan menginap"
-            ref = {input => this.search = input}
-            onChange = {this.handleInputChange}
-            onSubmit = {this.handleInputSubmit} />
+            placeholder ="search for something"
+            name="q"
+            value={this.state.q}
+            onChange = {this.handleChange}
+            onSubmit = {this.handleSubmit} />
+            <button className="btn" onClick={this.handleSubmit}>
+              Search
+            </button>
         </form>
-        <p>{this.state.query}</p>
+
+        <div className="tweet-container">
+          {this.state.tweets.map((item, key) => (
+            <div key={key} className="tweet-item">
+              <p>{item.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
