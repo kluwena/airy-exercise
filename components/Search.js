@@ -51,7 +51,14 @@ class Search extends React.Component {
         <div className="tweet-container">
           {this.state.tweets.map((item, key) => (
             <div key={key} className="tweet-item">
-              <p>{item.text}</p>
+              <img 
+                className="profile-image"
+                src={item.user.profile_image_url_https}
+              />
+              <p>{item.user.name}</p>
+              <a href={`https://twitter.com/${item.user.screen_name}/statuses/${item.id_str}`}>
+                {item.text}
+              </a>
             </div>
           ))}
         </div>

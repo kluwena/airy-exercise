@@ -15,6 +15,17 @@ const Header = () => {
       <Link href="/">
         <a style={linkStyle}>Home</a>
       </Link>
+      <style jsx>{`
+        body{
+          color: blue;
+        }
+        .tweet-container{
+          width: 300px;
+          border: 15px solid green;
+          padding: 50px;
+          margin: 20px;
+        }
+      `}</style>
     </div>
   )
 }
